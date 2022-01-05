@@ -17,6 +17,13 @@ class _TodoWritePageState extends State<TodoWritePage> {
   int _ctIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.todo!.title!;
+    _memoController.text = widget.todo!.memo!;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -112,6 +119,10 @@ class _TodoWritePageState extends State<TodoWritePage> {
                   '공부',
                   '운동',
                   '게임',
+                  '청소',
+                  '선물',
+                  '요리',
+                  '약속',
                 ];
 
                 widget.todo!.category = _category[_ctIndex];
