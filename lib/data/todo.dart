@@ -1,4 +1,5 @@
 class Todo {
+  int? id;
   String? title;
   String? memo;
   String? category;
@@ -6,5 +7,12 @@ class Todo {
   int? done;
   int? date;
 
-  Todo({this.title, this.memo, this.category, this.color, this.done, this.date});
+  Todo(
+      {this.id,
+      this.title,
+      this.memo,
+      this.category,
+      this.color,
+      this.done,
+      this.date});
 }
