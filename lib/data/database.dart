@@ -36,46 +36,46 @@ class DatabaseHelper {
 
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-    CREATE TABLE IF NOT EXISTS $todoTable (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title String,
-      memo String,
-      category String,
-      color INTEGER,
-      done INTEGER,
-      date INTEGER DEFAULT 0,
-    )
-    ''');
+      CREATE TABLE IF NOT EXISTS $todoTable (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title String,
+        memo String,
+        category String,
+        color INTEGER,
+        done INTEGER DEFAULT 0,
+        date INTEGER DEFAULT 0
+      )
+      ''');
   }
 
-  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    Future<int> insertTodo(Todo todo) async {
-      Database? db = await instance.database;
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {}
 
-      if (todo.id == null) {
-        Map<String, dynamic> row = {
-          'title': todo.title,
-          'memo': todo.memo,
-          'category': todo.category,
-          'color': todo.color,
-          'done': todo.done,
-          'date': todo.date,
-        };
+  Future<int> insertTodo(Todo todo) async {
+    Database? db = await instance.database;
 
-        return await db!.insert(todoTable, row);
-      } else {
-        Map<String, dynamic> row = {
-          'title': todo.title,
-          'memo': todo.memo,
-          'category': todo.category,
-          'color': todo.color,
-          'done': todo.done,
-          'date': todo.date,
-        };
+    if (todo.id == null) {
+      Map<String, dynamic> row = {
+        'title': todo.title,
+        'memo': todo.memo,
+        'category': todo.category,
+        'color': todo.color,
+        'done': todo.done,
+        'date': todo.date,
+      };
 
-        return await db!
-            .update(todoTable, row, where: 'id = ?', whereArgs: [todo.id]);
-      }
+      return await db!.insert(todoTable, row);
+    } else {
+      Map<String, dynamic> row = {
+        'title': todo.title,
+        'memo': todo.memo,
+        'category': todo.category,
+        'color': todo.color,
+        'done': todo.done,
+        'date': todo.date,
+      };
+
+      return await db!
+          .update(todoTable, row, where: 'id = ?', whereArgs: [todo.id]);
     }
   }
 

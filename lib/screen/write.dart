@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/data/database.dart';
 import 'package:todo_app/data/todo.dart';
 
 class TodoWritePage extends StatefulWidget {
@@ -16,6 +17,8 @@ class _TodoWritePageState extends State<TodoWritePage> {
   int _colorIndex = 0;
   int _ctIndex = 0;
 
+  final dbHelper = DatabaseHelper.instance;
+
   @override
   void initState() {
     super.initState();
@@ -29,11 +32,11 @@ class _TodoWritePageState extends State<TodoWritePage> {
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               // 저장 버튼 클릭
               widget.todo!.title = _nameController.text;
               widget.todo!.memo = _memoController.text;
-
+              await dbHelper.insertTodo(widget.todo!);
               Navigator.pop(context, widget.todo);
             },
             child: const Text(
